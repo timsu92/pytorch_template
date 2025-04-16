@@ -1,0 +1,28 @@
+services:
+  app:
+    environment:
+      - PROJECT_PATH=/project/pytorch_tempelate
+      - TZ=Asia/Taipei
+    build:
+      context: ..
+      target: dev
+      # secrets:
+      #   - GIT_AUTH_TOKEN
+      args:
+        - PROJECT_PATH=/project/pytorch_tempelate
+        - TZ=Asia/Taipei
+    volumes:
+      - ..:/project/pytorch_tempelate:rw,cached
+      - ${UV_CACHE_DIR:-${XDG_CACHE_HOME:-${HOME}/.cache}/uv}:/root/.cache/uv:rw,z
+    shm_size: 6G
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+
+# secrets:
+#   GIT_AUTH_TOKEN:
+#     environment: GIT_AUTH_TOKEN
+

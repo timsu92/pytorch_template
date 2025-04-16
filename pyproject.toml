@@ -1,0 +1,39 @@
+[project]
+name = "pytorch_tempelate"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "timsu92",email = "33785401+timsu92@users.noreply.github.com"}
+]
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+dependencies= [
+    "matplotlib>=3.10.1",
+    "opencv-python>=4.11.0.86",
+    "rich>=13.9.4",
+    "torch>=2.5.1",
+    "torchvision>=0.20.1",
+    "tqdm>=4.67.1",
+]
+
+[tool.uv.sources]
+torch = [
+    { index = "pytorch-cu121", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+]
+torchvision = [
+    { index = "pytorch-cu121", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu121"
+url = "https://download.pytorch.org/whl/cu121"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[dependency-groups]
+dev = []
+

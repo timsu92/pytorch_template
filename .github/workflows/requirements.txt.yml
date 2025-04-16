@@ -1,0 +1,47 @@
+name: Update requirements.txt on PR
+
+on:
+  push:
+    paths:
+      - "uv.lock"
+  pull_request:
+    paths:
+      - "uv.lock"
+
+permissions:
+  contents: write
+
+jobs:
+  update-requirements:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version-file: "pyproject.toml"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          # Install a specific version of uv.
+          version: "0.6.14"
+          enable-cache: true
+
+      - name: Export requirements.txt
+        run: uv export --format requirements-txt > requirements.txt
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git pull
+          git add requirements.txt
+          git commit -m "build(pip): update requirements.txt based on changes in uv.lock"
+          git push
+
