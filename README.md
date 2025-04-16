@@ -1,6 +1,6 @@
-# Tempelate for a Python uv Project
+# Tempelate for a Python PyTorch uv Project
 
-This is a template for a Python uv project. It is configured to use cuda 12.2.2, python >=3.10, and ubuntu 22.04. Coding with devcontainers is supported.
+This is a template for a Python PyTorch uv project. It is configured to use cuda 12.2.2, python >=3.10, ubuntu 22.04 and PyTorch 2.5.1. Coding with devcontainers is supported.
 
 ## Features
 
