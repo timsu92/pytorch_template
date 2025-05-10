@@ -10,10 +10,8 @@ requires-python = ">=3.10,<3.13"
 dependencies= [
     "matplotlib>=3.10.1",
     "opencv-python>=4.11.0.86",
-    "rich>=13.9.4",
     "torch>=2.5.1",
     "torchvision>=0.20.1",
-    "tqdm>=4.67.1",
 ]
 
 [tool.uv.sources]
