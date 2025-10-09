@@ -1,13 +1,6 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 {
   "name": "pytorch_tempelate",
-
-  // ## Base image ##
-  // More info: https://containers.dev/guide/dockerfile
-  // "image": "mcr.microsoft.com/devcontainers/base:jammy",
-  // "build": {
-  // 	"dockerfile": "Dockerfile"
-  // },
   "dockerComposeFile": "docker-compose-dev.yml",
   "service": "app",
   // "runServices": [],
@@ -15,12 +8,18 @@
 
   // ## Environment ##
   "workspaceFolder": "/project/pytorch_tempelate",
-  // Features to add to the dev container. More info: https://containers.dev/features.
-  // "features": {},
+  // Variables used in all of the container. Rebuild is required if you want to modify
+  "containerEnv": {
+    "GIT_EDITOR": "vim",
+  },
+  // Variables used for the devcontainer.json supporting service / tool
+  "remoteEnv": {
+    "GIT_AUTH_TOKEN": "${localEnv:GIT_AUTH_TOKEN}"
+  },
 
   // ## Custom commands in different stages ##
   // "onCreateCommand": "",
-  "postCreateCommand": "uv sync --frozen",
+  "postCreateCommand": ".devcontainer/postCreateCommand.sh",
   // "postStartCommand": "",
   // "postAttachCommand": "",
 
@@ -29,8 +28,8 @@
     "vscode": {
       "extensions": [
         "ms-python.python",
-        "ms-python.black-formatter",
-        "ms-python.isort"
+        "tamasfe.even-better-toml",
+        "charliermarsh.ruff",
       ]
     }
   }

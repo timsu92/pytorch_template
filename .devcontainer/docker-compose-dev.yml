@@ -2,6 +2,11 @@ services:
   app:
     environment:
       - PROJECT_PATH=/project/pytorch_tempelate
+      # prevents python creating .pyc files at runtime
+      # - PYTHONDONTWRITEBYTECODE=1
+      # compile python dependencies into .pyc files
+      # - UV_COMPILE_BYTECODE=1
+      - PYTHONDEVMODE=1
       - TZ=Asia/Taipei
     build:
       context: ..
