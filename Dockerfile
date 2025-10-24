@@ -118,7 +118,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         # timezone
         tzdata \
         # useful tools
-        git vim wget curl ca-certificates
+        git vim wget curl ca-certificates less
 # set timezone
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 
