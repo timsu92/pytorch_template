@@ -1,5 +1,8 @@
-# Created by https://www.toptal.com/developers/gitignore/api/git,python,venv
-# Edit at https://www.toptal.com/developers/gitignore?templates=git,python,venv
+# Created by https://www.toptal.com/developers/gitignore/api/git,venv,python,dotenv
+# Edit at https://www.toptal.com/developers/gitignore?templates=git,venv,python,dotenv
+
+### dotenv ###
+.env
 
 ### Git ###
 # Created by git for backups. To disable backups in Git:
@@ -139,7 +142,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
@@ -200,4 +202,5 @@ pyrightconfig.json
 pyvenv.cfg
 pip-selfcheck.json
 
-# End of https://www.toptal.com/developers/gitignore/api/git,python,venv
+# End of https://www.toptal.com/developers/gitignore/api/git,venv,python,dotenv
+
