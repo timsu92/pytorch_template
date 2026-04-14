@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.17-labs
-ARG BASE_IMAGE=nvidia/cuda:12.2.2-base-ubuntu22.04
+ARG BASE_IMAGE=nvidia/cuda:12.8.1-base-ubuntu24.04
 
 FROM $BASE_IMAGE AS python-base
 ARG PROJECT_PATH
