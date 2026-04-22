@@ -120,6 +120,11 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 # set timezone
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 
+# Initialize user environment
+RUN --mount=type=tmpfs,dst=/tmp/dotfiles \
+    git clone --depth=1 https://github.com/timsu92/env_setup.git /tmp/dotfiles \
+    && /tmp/dotfiles/bin/setup-devcontainer
+
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
