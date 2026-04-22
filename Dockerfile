@@ -2,7 +2,6 @@
 ARG BASE_IMAGE=nvidia/cuda:12.8.1-base-ubuntu24.04
 
 FROM $BASE_IMAGE AS python-base
-ARG PROJECT_PATH
 ARG NONROOT_USERNAME=nonroot
 
 # python
@@ -11,20 +10,19 @@ ENV PYTHONUNBUFFERED=1 \
     # pip
     PIP_NO_CACHE_DIR=off \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
-    PIP_DEFAULT_TIMEOUT=100 \
-    \
-    # paths
-    # this is where our requirements + virtual environment will live
-    VENV_PATH="${PROJECT_PATH}/.venv"
-
-# prepend venv to path
-ENV PATH="$VENV_PATH/bin:$PATH"
+    PIP_DEFAULT_TIMEOUT=100
 
 ################################################################################
 
 FROM python-base AS prod-prepare
+ARG PROJECT_PATH
 ARG DEBIAN_FRONTEND=noninteractive
 ARG NONROOT_USERNAME
+
+# python
+ENV VENV_PATH="${PROJECT_PATH}/.venv" \
+# prepend venv to path
+    PATH="$VENV_PATH/bin:$PATH"
 
     # Copy from the cache instead of linking since it's a mounted volume
 ENV UV_LINK_MODE=copy \
@@ -124,8 +122,6 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-WORKDIR ${PROJECT_PATH}
-
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt-get update \
@@ -134,5 +130,13 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         libgl1 libglib2.0-0 \
         # deps for dev dep opencv imshow
         libsm6
+
+ARG PROJECT_PATH
+WORKDIR ${PROJECT_PATH}
+
+# python
+ENV VENV_PATH="${PROJECT_PATH}/.venv" \
+# prepend venv to path
+    PATH="$VENV_PATH/bin:$PATH"
 
 CMD ["/bin/sh", "-c", "echo \"Container started\"; trap \"echo Container stopped; exit 0\" 15; exec \"$@\"; while sleep 1 & wait $!; do :; done"]
