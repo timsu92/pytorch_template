@@ -14,16 +14,8 @@ This is a template for a Python PyTorch uv project. It is configured to use cuda
 
 ## Changes before using
 
-Before using this template, you may want to change the project path in these files:
-- [docker-compose.yml line 4](./docker-compose.yml#L4)
-- [docker-compose.yml line 17](./docker-compose.yml#L17)
-- [.devcontainer/docker-compose-dev.yml line 4](./.devcontainer/docker-compose-dev.yml#L4)
-- [.devcontainer/docker-compose-dev.yml line 17](./.devcontainer/docker-compose-dev.yml#L17)
-- [.devcontainer/docker-compose-dev.yml line 20](./.devcontainer/docker-compose-dev.yml#L20)
+Before using this template, you may want to change the project name:
 - [.devcontainer/devcontainer.json line 3](./.devcontainer/devcontainer.json#L3)
-- [.devcontainer/devcontainer.json line 10](./.devcontainer/devcontainer.json#L10)
-
-...and you may want to change the project name:
 - [pyproject.toml line 2](./pyproject.toml#L2)
 
 ...and you may want to change the Python version:

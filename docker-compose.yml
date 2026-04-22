@@ -1,7 +1,7 @@
 services:
   app:
     environment:
-      - PROJECT_PATH=/project/pytorch_template
+      - PROJECT_PATH=/project
       # prevents python creating .pyc files at runtime
       - PYTHONDONTWRITEBYTECODE=1
       # compile python dependencies into .pyc files
@@ -14,7 +14,7 @@ services:
       # secrets:
       #   - GIT_AUTH_TOKEN
       args:
-        - PROJECT_PATH=/project/pytorch_template
+        - PROJECT_PATH=/project
         - TZ=Asia/Taipei
     shm_size: 6G
     deploy:

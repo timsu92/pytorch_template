@@ -1,13 +1,13 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 {
-  "name": "pytorch_tempelate",
+  "name": "${localWorkspaceFolderBasename}",
   "dockerComposeFile": "docker-compose-dev.yml",
   "service": "app",
   // "runServices": [],
   "overrideCommand": false,
 
   // ## Environment ##
-  "workspaceFolder": "/project/pytorch_tempelate",
+  "workspaceFolder": "/project",
   // Variables used in all of the container. Rebuild is required if you want to modify
   "containerEnv": {
     "GIT_EDITOR": "vim",

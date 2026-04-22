@@ -1,7 +1,7 @@
 services:
   app:
     environment:
-      - PROJECT_PATH=/project/pytorch_template
+      - PROJECT_PATH=/project
       # prevents python creating .pyc files at runtime
       # - PYTHONDONTWRITEBYTECODE=1
       # compile python dependencies into .pyc files
@@ -14,10 +14,10 @@ services:
       # secrets:
       #   - GIT_AUTH_TOKEN
       args:
-        - PROJECT_PATH=/project/pytorch_template
+        - PROJECT_PATH=/project
         - TZ=Asia/Taipei
     volumes:
-      - ..:/project/pytorch_template:rw,cached
+      - ..:/project:rw,cached
       - ${UV_CACHE_DIR:-${XDG_CACHE_HOME:-${HOME}/.cache}/uv}:/root/.cache/uv:rw,z
     shm_size: 6G
     deploy:
