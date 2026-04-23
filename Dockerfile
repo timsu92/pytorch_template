@@ -20,9 +20,9 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG NONROOT_USERNAME
 
 # python
-ENV VENV_PATH="${PROJECT_PATH}/.venv" \
+ENV VENV_PATH="${PROJECT_PATH}/.venv"
 # prepend venv to path
-    PATH="$VENV_PATH/bin:$PATH"
+ENV PATH="$VENV_PATH/bin:$PATH"
 
     # Copy from the cache instead of linking since it's a mounted volume
 ENV UV_LINK_MODE=copy \
