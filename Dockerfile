@@ -140,8 +140,8 @@ ARG PROJECT_PATH
 WORKDIR ${PROJECT_PATH}
 
 # python
-ENV VENV_PATH="${PROJECT_PATH}/.venv" \
+ENV VENV_PATH="${PROJECT_PATH}/.venv"
 # prepend venv to path
-    PATH="$VENV_PATH/bin:$PATH"
+ENV PATH="$VENV_PATH/bin:$PATH"
 
 CMD ["/bin/sh", "-c", "echo \"Container started\"; trap \"echo Container stopped; exit 0\" 15; exec \"$@\"; while sleep 1 & wait $!; do :; done"]
