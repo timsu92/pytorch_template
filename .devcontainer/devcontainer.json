@@ -2,6 +2,8 @@
 {
   "name": "${localWorkspaceFolderBasename}",
   "dockerComposeFile": "docker-compose-dev.yml",
+  // For local image maintenance, temporarily switch to:
+  // "dockerComposeFile": ["docker-compose-dev.yml", "docker-compose-dev.build.yml"],
   "service": "app",
   // "runServices": [],
   "overrideCommand": false,

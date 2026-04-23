@@ -1,5 +1,6 @@
 services:
   app:
+    image: ghcr.io/timsu92/pytorch_template:main
     environment:
       - PROJECT_PATH=/project
       # prevents python creating .pyc files at runtime
@@ -8,14 +9,6 @@ services:
       # - UV_COMPILE_BYTECODE=1
       - PYTHONDEVMODE=1
       - TZ=Asia/Taipei
-    build:
-      context: ..
-      target: dev
-      # secrets:
-      #   - GIT_AUTH_TOKEN
-      args:
-        - PROJECT_PATH=/project
-        - TZ=Asia/Taipei
     volumes:
       - ..:/project:rw,cached
       - ${UV_CACHE_DIR:-${XDG_CACHE_HOME:-${HOME}/.cache}/uv}:/root/.cache/uv:rw,z

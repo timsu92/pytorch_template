@@ -1,0 +1,10 @@
+services:
+  app:
+    build:
+      context: ..
+      target: dev
+      # secrets:
+      #   - GIT_AUTH_TOKEN
+      args:
+        - PROJECT_PATH=/project
+        - TZ=Asia/Taipei
