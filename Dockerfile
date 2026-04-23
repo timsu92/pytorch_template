@@ -120,11 +120,6 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 # set timezone
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 
-# Initialize user environment
-RUN --mount=type=tmpfs,dst=/tmp/dotfiles \
-    git clone --depth=1 https://github.com/timsu92/env_setup.git /tmp/dotfiles \
-    && /tmp/dotfiles/bin/setup-devcontainer
-
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
@@ -135,6 +130,16 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         libgl1 libglib2.0-0 \
         # deps for dev dep opencv imshow
         libsm6
+
+# Initialize user environment
+ARG ENV_SETUP_REPO=https://github.com/timsu92/env_setup.git
+ARG ENV_SETUP_REF=main
+RUN --mount=type=tmpfs,dst=/tmp/dotfiles \
+    git -C /tmp/dotfiles init \
+    && git -C /tmp/dotfiles remote add origin ${ENV_SETUP_REPO} \
+    && git -C /tmp/dotfiles fetch --depth=1 origin ${ENV_SETUP_REF} \
+    && git -C /tmp/dotfiles checkout --detach FETCH_HEAD \
+    && /tmp/dotfiles/bin/setup-devcontainer
 
 ARG PROJECT_PATH
 WORKDIR ${PROJECT_PATH}

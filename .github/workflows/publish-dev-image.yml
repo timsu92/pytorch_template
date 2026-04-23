@@ -30,6 +30,7 @@ concurrency:
 
 env:
   IMAGE_NAME: ghcr.io/timsu92/pytorch_template
+  DOTENV_REPO: https://github.com/timsu92/env_setup.git
 
 jobs:
   build-dev-image:
@@ -69,6 +70,17 @@ jobs:
             type=raw,value=latest,enable={{is_default_branch}}
             type=sha,prefix=sha-
 
+      - name: Resolve env_setup ref
+        id: env_setup
+        run: |
+          set -eu
+          REF_SHA=$(git ls-remote ${{ env.DOTENV_REPO }} refs/heads/main | awk '{print $1}')
+          if [ -z "$REF_SHA" ]; then
+            echo "Failed to resolve env_setup main SHA" >&2
+            exit 1
+          fi
+          echo "ref_sha=$REF_SHA" >> "$GITHUB_OUTPUT"
+
       - name: Build (and optionally push) dev image
         uses: docker/build-push-action@v6
         with:
@@ -81,5 +93,7 @@ jobs:
           build-args: |
             PROJECT_PATH=/project
             TZ=Asia/Taipei
+            ENV_SETUP_REPO=${{ env.DOTENV_REPO }}
+            ENV_SETUP_REF=${{ steps.env_setup.outputs.ref_sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
