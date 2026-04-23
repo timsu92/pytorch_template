@@ -32,6 +32,37 @@ Before using this template, you may want to change the project name:
 2. Open this project in VSCode.
 3. Click the `Reopen in Container` button.
 
+By default, devcontainer uses the upstream prebuilt image:
+
+- `ghcr.io/timsu92/pytorch_template:main`
+
+It still keeps the compose-based workflow (volumes, GPU settings, environment variables), but avoids rebuilding the dev image in every consumer project.
+
+If you want to test Dockerfile changes locally (maintainer mode), temporarily switch [.devcontainer/devcontainer.json](./.devcontainer/devcontainer.json) to:
+
+```jsonc
+"dockerComposeFile": ["docker-compose-dev.yml", "docker-compose-dev.build.yml"]
+```
+
+Then run `Rebuild Container`.
+
+### Auto publish dev image
+
+GitHub Actions workflow [.github/workflows/publish-dev-image.yml](./.github/workflows/publish-dev-image.yml) builds the `dev` stage and publishes to GHCR when relevant files change:
+
+- `.devcontainer/**`
+- `.dockerignore`
+- `docker-compose.yml`
+- `Dockerfile`
+- `.github/workflows/publish-dev-image.yml`
+
+It also runs on:
+
+- manual trigger (`workflow_dispatch`)
+- weekly schedule: Sunday 03:00 Asia/Taipei
+
+Fork repositories do not push images by default, and will consume the upstream image unless explicitly changed.
+
 ### Build and run for production
 
 Just run:
