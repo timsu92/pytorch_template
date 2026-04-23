@@ -15,14 +15,8 @@ ENV PYTHONUNBUFFERED=1 \
 ################################################################################
 
 FROM python-base AS prod-prepare
-ARG PROJECT_PATH
 ARG DEBIAN_FRONTEND=noninteractive
 ARG NONROOT_USERNAME
-
-# python
-ENV VENV_PATH="${PROJECT_PATH}/.venv"
-# prepend venv to path
-ENV PATH="$VENV_PATH/bin:$PATH"
 
     # Copy from the cache instead of linking since it's a mounted volume
 ENV UV_LINK_MODE=copy \
@@ -43,12 +37,18 @@ ENV UV_LINK_MODE=copy \
 
 RUN useradd -ms /bin/bash ${NONROOT_USERNAME} --user-group
 USER ${NONROOT_USERNAME}
-WORKDIR ${PROJECT_PATH}
 
 # # login to GitHub CLI
 # RUN --mount=type=secret,id=GIT_AUTH_TOKEN,required=true,uid=1000,gid=1000 \
     # gh auth login --with-token < /run/secrets/GIT_AUTH_TOKEN
 # RUN gh auth setup-git
+
+ARG PROJECT_PATH
+# python
+ENV VENV_PATH="${PROJECT_PATH}/.venv"
+# prepend venv to path
+ENV PATH="$VENV_PATH/bin:$PATH"
+WORKDIR ${PROJECT_PATH}
 
 # # install runtime deps - without project itself
     # # uv download cache
