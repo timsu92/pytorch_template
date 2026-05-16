@@ -129,7 +129,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         # deps for dev dep opencv
         libgl1 libglib2.0-0 \
         # deps for dev dep opencv imshow
-        libsm6
+        libsm6 \
         # Package required by matplotlib for interactive display
         python3-tk
 
