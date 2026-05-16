@@ -130,6 +130,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         libgl1 libglib2.0-0 \
         # deps for dev dep opencv imshow
         libsm6
+        # Package required by matplotlib for interactive display
+        python3-tk
 
 # Initialize user environment
 ARG ENV_SETUP_REPO=https://github.com/timsu92/env_setup.git
